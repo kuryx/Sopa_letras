@@ -1,16 +1,22 @@
-/* styles.css */
-#sopa-de-letras {
+  /* Estilos CSS para la sopa de letras */
+  #sopa-de-letras {
     display: grid;
-    grid-template-columns: repeat(15, 30px);
-    grid-template-rows: repeat(15, 30px);
-    gap: 2px;
+    grid-template-columns: repeat(15, 30px); /* Ajusta el tamaño de las columnas según tus necesidades */
+    gap: 2px; /* Espacio entre celdas */
+    float: left;
 }
 
 .celda {
-    width: 30px;
-    height: 30px;
+    width: 30px; /* Ajusta el tamaño de las celdas según tus necesidades */
+    height: 30px; /* Ajusta el tamaño de las celdas según tus necesidades */
+    border: 1px solid #000;
     text-align: center;
     vertical-align: middle;
-    font-size: 18px;
-    border: 1px solid #ccc;
+    font-size: 20px; /* Tamaño de la fuente de las letras */
+}
+
+/* Estilos CSS para la lista de palabras */
+#lista-palabras {
+    float: left;
+    margin-left: 20px; /* Ajusta el margen según tus necesidades */
 }

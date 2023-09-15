@@ -1,6 +1,5 @@
-        
- // Lista de palabras relacionadas con la programación web
- const palabras = [
+// Lista de palabras relacionadas con la programación web
+const palabras = [
     "HTML",
     "CSS",
     "JAVASCRIPT",
@@ -33,6 +32,9 @@ function generarSopaDeLetras() {
     const sopa = document.getElementById("sopa-de-letras");
     sopa.innerHTML = ""; // Limpiar la sopa actual
 
+    const listaPalabras = document.getElementById("lista-palabras");
+    listaPalabras.innerHTML = ""; // Limpiar la lista de palabras
+
     const largo = 15; // Tamaño de la sopa de letras
 
     // Barajar las palabras aleatoriamente
@@ -47,10 +49,14 @@ function generarSopaDeLetras() {
         }
     }
 
-    // Colocar palabras en la sopa
+    // Colocar palabras en la sopa y agregarlas a la lista
     for (const palabra of palabras) {
         if (!colocarPalabra(sopa, palabra)) {
             console.log(`No se pudo colocar la palabra: ${palabra}`);
+        } else {
+            const li = document.createElement("li");
+            li.textContent = palabra;
+            listaPalabras.appendChild(li);
         }
     }
 
