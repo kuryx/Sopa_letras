@@ -24,7 +24,26 @@ const palabras = [
     "ANGULAR",
     "BOOTSTRAP",
     "JSON",
-    "AJAX"
+    "AJAX",
+    "CODIGO",
+    "PROYECTO",
+    "APLICACION",
+    "TECNOLOGIA",
+    "DESARROLLO",
+    "INTERFAZ",
+    "USUARIO",
+    "SERVIDOR",
+    "DOMINIO",
+    "ENLACE",
+    "IMAGEN",
+    "TEXTO",
+    "ESTILOS",
+    "FRAMEWORK",
+    "PROGRAMADOR",
+    "DESARROLLADOR",
+    "BASESDEDATOS",
+    "RESPONSIVE",
+    "ANIMACION"
 ];
 
 // Función para generar la sopa de letras
@@ -178,7 +197,7 @@ function resaltarPalabra(sopa, palabra) {
                     for (let k = 0; k < palabraArray.length; k++) {
                         const nuevoI = i + k * dx;
                         const nuevoJ = j + k * dy;
-                        celdas[nuevoI * largo + nuevoJ].style.backgroundColor = "yellow";
+                        celdas[nuevoI * largo + nuevoJ].style.backgroundColor = "#F178E7";
                     }
                 }
             }

@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!--==================== UNICONS ====================-->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sopa de Letras</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Sopa de Letras de Programación Web</h1>
-    <div id="sopa-de-letras"></div>
-    <button id="generar-button">Generar Sopa</button>
-    <button id="resolver-button">Resolver Sopa</button>
+    <h1 class="home__title">Sopa de Letras de Programación Web</h1>
+    <section class="all">
+        <div id="sopa-de-letras" class="sopa-de-letras"></div>
+        <div>
+            <h2 class="palabras__sopa home__data">Palabras en la sopa</h2>
+            <div class="home__data">
+                <ul id="lista-palabras"></ul>
+                <div>
+                    <a class="button button--flex button--small sopa__button" id="generar-button">
+                        Generar Sopa <i class="uil uil-sync button__icon"></i>
+                    </a>
+                    <a class="button button--flex button--small sopa__button" id="resolver-button">
+                        Resolver Sopa <i class="uil uil-brain button__icon"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
     <script src="script.js"></script>
-    <ul id="lista-palabras"></ul> <!-- Lista de palabras -->
 </body>
 </html>
