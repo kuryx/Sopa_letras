@@ -1,49 +1,10 @@
 // Lista de palabras relacionadas con la programación web
 const palabras = [
-    "HTML",
-    "CSS",
-    "JAVASCRIPT",
-    "FRONTEND",
-    "BACKEND",
-    "FRAMEWORK",
-    "API",
-    "DOM",
-    "RESPONSIVE",
-    "DATABASE",
-    "SERVER",
-    "HTTP",
-    "URL",
-    "BROWSER",
-    "CODE",
-    "WEB",
-    "DESIGN",
-    "DATABASE",
-    "NODE",
-    "REACT",
-    "VUE",
-    "ANGULAR",
-    "BOOTSTRAP",
-    "JSON",
-    "AJAX",
-    "CODIGO",
-    "PROYECTO",
-    "APLICACION",
-    "TECNOLOGIA",
-    "DESARROLLO",
-    "INTERFAZ",
-    "USUARIO",
-    "SERVIDOR",
-    "DOMINIO",
-    "ENLACE",
-    "IMAGEN",
-    "TEXTO",
-    "ESTILOS",
-    "FRAMEWORK",
-    "PROGRAMADOR",
-    "DESARROLLADOR",
-    "BASESDEDATOS",
-    "RESPONSIVE",
-    "ANIMACION"
+    "HTML", "CSS", "JAVASCRIPT", "FRONTEND", "BACKEND", "FRAMEWORK", "API", "DOM", "RESPONSIVE", "DATABASE",
+    "SERVER", "HTTP", "URL", "BROWSER", "CODE", "WEB", "DESIGN", "DATABASE", "NODE", "REACT", "VUE", "ANGULAR",
+    "BOOTSTRAP", "JSON", "AJAX", "CODIGO", "PROYECTO", "APLICACION", "TECNOLOGIA", "DESARROLLO", "INTERFAZ",
+    "USUARIO", "SERVIDOR", "DOMINIO", "ENLACE", "IMAGEN", "TEXTO", "ESTILOS", "FRAMEWORK", "PROGRAMADOR",
+    "DESARROLLADOR", "BASESDEDATOS", "RESPONSIVE", "ANIMACION"
 ];
 
 // Función para generar la sopa de letras
@@ -54,7 +15,7 @@ function generarSopaDeLetras() {
     const listaPalabras = document.getElementById("lista-palabras");
     listaPalabras.innerHTML = ""; // Limpiar la lista de palabras
 
-    const largo = 15; // Tamaño de la sopa de letras
+    const largo = 20; // Tamaño de la sopa de letras
 
     // Barajar las palabras aleatoriamente
     palabras.sort(() => Math.random() - 0.5);
@@ -70,7 +31,7 @@ function generarSopaDeLetras() {
 
     // Colocar palabras en la sopa y agregarlas a la lista
     for (const palabra of palabras) {
-        if (!colocarPalabra(sopa, palabra)) {
+        if (!colocarPalabra(sopa, palabra, largo)) {
             console.log(`No se pudo colocar la palabra: ${palabra}`);
         } else {
             const li = document.createElement("li");
@@ -90,9 +51,8 @@ function generarSopaDeLetras() {
 }
 
 // Función para colocar una palabra en la sopa de letras
-function colocarPalabra(sopa, palabra) {
+function colocarPalabra(sopa, palabra, largo) {
     const celdas = sopa.getElementsByClassName("celda");
-    const largo = 15;
     const direccion = Math.random() < 0.5 ? "horizontal" : "vertical";
     const palabraArray = palabra.split("");
 
@@ -128,7 +88,7 @@ function colocarPalabra(sopa, palabra) {
 function resolverSopa() {
     const sopa = document.getElementById("sopa-de-letras");
     const celdas = sopa.getElementsByClassName("celda");
-    const largo = 15;
+    const largo = 20;
 
     for (let i = 0; i < largo; i++) {
         for (let j = 0; j < largo; j++) {
@@ -138,16 +98,15 @@ function resolverSopa() {
     }
 
     palabras.forEach(palabra => {
-        if (buscarPalabra(sopa, palabra)) {
-            resaltarPalabra(sopa, palabra);
+        if (buscarPalabra(sopa, palabra, largo)) {
+            resaltarPalabra(sopa, palabra, largo);
         }
     });
 }
 
-function buscarPalabra(sopa, palabra) {
+function buscarPalabra(sopa, palabra, largo) {
     const celdas = sopa.getElementsByClassName("celda");
     const palabraArray = palabra.split("");
-    const largo = 15;
 
     for (let i = 0; i < largo; i++) {
         for (let j = 0; j < largo; j++) {
@@ -173,10 +132,9 @@ function buscarPalabra(sopa, palabra) {
     return false;
 }
 
-function resaltarPalabra(sopa, palabra) {
+function resaltarPalabra(sopa, palabra, largo) {
     const celdas = sopa.getElementsByClassName("celda");
     const palabraArray = palabra.split("");
-    const largo = 15;
 
     for (let i = 0; i < largo; i++) {
         for (let j = 0; j < largo; j++) {
