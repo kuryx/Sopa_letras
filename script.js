@@ -175,23 +175,25 @@ generarButton.addEventListener("click", () => {
 // Variable para seguir el estado actual de la sopa
 let sopaResuelta = false;
 
+
+
 // Event listener para el botón "Resolver Sopa"
 const resolverButton = document.getElementById("resolver-button");
-const resolverButtonText = document.getElementById("resolver-button-text");
+
 resolverButton.addEventListener("click", () => {
     if (sopaResuelta) {
         // Si la sopa está resuelta, desresolverla
         desresolverSopa();
-        resolverButton.textContent = "Resolver Sopa";
-        
     } else {
         // Si la sopa no está resuelta, resolverla
         resolverSopa();
-        resolverButton.textContent = "Deshacer Resolución";
     }
     // Cambiar el estado actual de la sopa
     sopaResuelta = !sopaResuelta;
 });
+
+
+
 
 // Función para desresolver la sopa de letras
 function desresolverSopa() {
