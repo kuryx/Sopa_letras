@@ -204,7 +204,9 @@ function desresolverSopa() {
     for (let i = 0; i < largo; i++) {
         for (let j = 0; j < largo; j++) {
             const index = i * largo + j;
-            celdas[index].style.backgroundColor = "transparent";
+            const celda = celdas[index];
+            celda.style.backgroundColor = "transparent"; // Restaura el fondo transparente
+
         }
     }
 }
@@ -218,12 +220,20 @@ window.addEventListener("DOMContentLoaded", generarSopaDeLetras);
 let seleccionActual = [];
 let palabraSeleccionada = "";
 
+// Variable para almacenar las palabras encontradas manualmente
+let palabrasEncontradasManualmente = [];
+
+
 // Event listener para hacer clic en una celda de la sopa
 document.getElementById("sopa-de-letras").addEventListener("click", (event) => {
     const celda = event.target;
 
-    // Verificar si la celda ya ha sido seleccionada previamente
-    if (!celda.classList.contains("seleccionada")) {
+    // Verificar si la celda ya ha sido seleccionada previamente o si la palabra ya ha sido encontrada manualmente
+    if (
+        !celda.classList.contains("seleccionada") &&
+        !celda.classList.contains("palabra-encontrada") &&
+        !palabrasEncontradasManualmente.includes(palabraSeleccionada)
+    ) {
         // Agregar la celda a la selección actual
         seleccionActual.push(celda);
 
@@ -232,8 +242,25 @@ document.getElementById("sopa-de-letras").addEventListener("click", (event) => {
 
         // Obtener la palabra seleccionada actualmente
         palabraSeleccionada = seleccionActual.map(c => c.textContent).join("");
-    } else {
-        // Si el usuario hace clic en una celda ya seleccionada, deseleccionarla
+
+        // Verificar si la palabra seleccionada coincide con alguna palabra de la lista
+        if (palabras.includes(palabraSeleccionada)) {
+            // Resaltar la palabra en la sopa de letras si es correcta
+            resaltarPalabra(document.getElementById("sopa-de-letras"), palabraSeleccionada, 20);
+
+            // Marcar la palabra como encontrada en la lista de palabras
+            resaltarPalabraEnLista(palabraSeleccionada);
+            celda.classList.add("palabra-encontrada"); // Marcar la celda como parte de una palabra encontrada
+
+            // Agregar la palabra encontrada manualmente a la lista
+            palabrasEncontradasManualmente.push(palabraSeleccionada);
+
+            // Desseleccionar la palabra seleccionada
+            deseleccionarPalabra();
+        }
+    } 
+    else {
+        // Si el usuario hace clic en una celda ya seleccionada o parte de una palabra encontrada, deseleccionarla
         deseleccionarPalabra();
     }
 
