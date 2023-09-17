@@ -16,6 +16,7 @@ function generarSopaDeLetras() {
     listaPalabras.innerHTML = ""; // Limpiar la lista de palabras
 
     const largo = 20; // Tamaño de la sopa de letras
+    const palabrasUnicas = new Set(); // Conjunto para almacenar palabras únicas
 
     // Barajar las palabras aleatoriamente
     palabras.sort(() => Math.random() - 0.5);
@@ -29,11 +30,10 @@ function generarSopaDeLetras() {
         }
     }
 
-    // Colocar palabras en la sopa y agregarlas a la lista
+    // Colocar palabras en la sopa y agregarlas a la lista (evitando repeticiones)
     for (const palabra of palabras) {
-        if (!colocarPalabra(sopa, palabra, largo)) {
-            console.log(`No se pudo colocar la palabra: ${palabra}`);
-        } else {
+        if (!palabrasUnicas.has(palabra) && colocarPalabra(sopa, palabra, largo)) {
+            palabrasUnicas.add(palabra);
             const li = document.createElement("li");
             li.textContent = palabra;
             listaPalabras.appendChild(li);
@@ -163,17 +163,138 @@ function resaltarPalabra(sopa, palabra, largo) {
     }
 }
 
+
+
 // Event listener para el botón "Generar Sopa"
 const generarButton = document.getElementById("generar-button");
 generarButton.addEventListener("click", () => {
     generarSopaDeLetras(); // Generar una nueva sopa de letras
 });
+// ...
+
+// Variable para seguir el estado actual de la sopa
+let sopaResuelta = false;
 
 // Event listener para el botón "Resolver Sopa"
 const resolverButton = document.getElementById("resolver-button");
+const resolverButtonText = document.getElementById("resolver-button-text");
 resolverButton.addEventListener("click", () => {
-    resolverSopa();
+    if (sopaResuelta) {
+        // Si la sopa está resuelta, desresolverla
+        desresolverSopa();
+        resolverButton.textContent = "Resolver Sopa";
+        
+    } else {
+        // Si la sopa no está resuelta, resolverla
+        resolverSopa();
+        resolverButton.textContent = "Deshacer Resolución";
+    }
+    // Cambiar el estado actual de la sopa
+    sopaResuelta = !sopaResuelta;
 });
+
+// Función para desresolver la sopa de letras
+function desresolverSopa() {
+    const sopa = document.getElementById("sopa-de-letras");
+    const celdas = sopa.getElementsByClassName("celda");
+    const largo = 20;
+
+    for (let i = 0; i < largo; i++) {
+        for (let j = 0; j < largo; j++) {
+            const index = i * largo + j;
+            celdas[index].style.backgroundColor = "transparent";
+        }
+    }
+}
+
+// ...
 
 // Generar la sopa de letras al cargar la página
 window.addEventListener("DOMContentLoaded", generarSopaDeLetras);
+
+// Variables para el seguimiento de la selección del usuario
+let seleccionActual = [];
+let palabraSeleccionada = "";
+
+// Event listener para hacer clic en una celda de la sopa
+document.getElementById("sopa-de-letras").addEventListener("click", (event) => {
+    const celda = event.target;
+
+    // Verificar si la celda ya ha sido seleccionada previamente
+    if (!celda.classList.contains("seleccionada")) {
+        // Agregar la celda a la selección actual
+        seleccionActual.push(celda);
+
+        // Cambiar el fondo de la celda seleccionada
+        celda.classList.add("seleccionada");
+
+        // Obtener la palabra seleccionada actualmente
+        palabraSeleccionada = seleccionActual.map(c => c.textContent).join("");
+    } else {
+        // Si el usuario hace clic en una celda ya seleccionada, deseleccionarla
+        deseleccionarPalabra();
+    }
+
+    // Verificar si la palabra seleccionada coincide con alguna palabra de la lista
+    if (palabras.includes(palabraSeleccionada)) {
+        // Resaltar la palabra en la sopa de letras si es correcta
+        resaltarPalabra(document.getElementById("sopa-de-letras"), palabraSeleccionada, 20);
+    }
+});
+
+// Función para deseleccionar una palabra
+function deseleccionarPalabra() {
+    for (const celda of seleccionActual) {
+        celda.classList.remove("seleccionada");
+    }
+    seleccionActual = [];
+    palabraSeleccionada = "";
+}
+
+function resaltarPalabra(sopa, palabra, largo) {
+    const celdas = sopa.getElementsByClassName("celda");
+    const palabraArray = palabra.split("");
+
+    // Itera a través de las celdas para buscar la palabra
+    for (let i = 0; i < largo; i++) {
+        for (let j = 0; j < largo; j++) {
+            for (const [dx, dy] of [[0, 1], [1, 0], [1, 1], [1, -1]]) {
+                let coincide = true;
+                for (let k = 0; k < palabraArray.length; k++) {
+                    const nuevoI = i + k * dx;
+                    const nuevoJ = j + k * dy;
+                    if (
+                        nuevoI < 0 || nuevoI >= largo || nuevoJ < 0 || nuevoJ >= largo ||
+                        celdas[nuevoI * largo + nuevoJ].textContent !== palabraArray[k]
+                    ) {
+                        coincide = false;
+                        break;
+                    }
+                }
+                if (coincide) {
+                    for (let k = 0; k < palabraArray.length; k++) {
+                        const nuevoI = i + k * dx;
+                        const nuevoJ = j + k * dy;
+                        celdas[nuevoI * largo + nuevoJ].style.backgroundColor = "#F178E7";
+                    }
+                    // Resalta la palabra en la lista de palabras
+                    resaltarPalabraEnLista(palabra);
+                    return; // Detiene la búsqueda una vez que se encuentra la palabra
+                }
+            }
+        }
+    }
+}
+
+// Función para resaltar una palabra en la lista de palabras
+function resaltarPalabraEnLista(palabra) {
+    const listaPalabras = document.getElementById("lista-palabras");
+    const palabrasEnLista = listaPalabras.getElementsByTagName("li");
+
+    for (const palabraEnLista of palabrasEnLista) {
+        if (palabraEnLista.textContent === palabra) {
+            palabraEnLista.classList.add("palabra-resaltada"); // Agrega la clase para resaltar
+            break;
+        }
+    }
+}
