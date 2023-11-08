@@ -172,44 +172,6 @@ generarButton.addEventListener("click", () => {
 });
 // ...
 
-// Variable para seguir el estado actual de la sopa
-let sopaResuelta = false;
-
-
-
-// Event listener para el botón "Resolver Sopa"
-const resolverButton = document.getElementById("resolver-button");
-
-resolverButton.addEventListener("click", () => {
-    if (sopaResuelta) {
-        // Si la sopa está resuelta, desresolverla
-        desresolverSopa();
-    } else {
-        // Si la sopa no está resuelta, resolverla
-        resolverSopa();
-    }
-    // Cambiar el estado actual de la sopa
-    sopaResuelta = !sopaResuelta;
-});
-
-
-
-
-// Función para desresolver la sopa de letras
-function desresolverSopa() {
-    const sopa = document.getElementById("sopa-de-letras");
-    const celdas = sopa.getElementsByClassName("celda");
-    const largo = 20;
-
-    for (let i = 0; i < largo; i++) {
-        for (let j = 0; j < largo; j++) {
-            const index = i * largo + j;
-            const celda = celdas[index];
-            celda.style.backgroundColor = "transparent"; // Restaura el fondo transparente
-
-        }
-    }
-}
 
 // ...
 
@@ -327,3 +289,6 @@ function resaltarPalabraEnLista(palabra) {
         }
     }
 }
+
+let palabrasEncontradasPorUsuario = [];
+
